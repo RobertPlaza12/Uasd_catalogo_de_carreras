@@ -228,3 +228,96 @@ INSERT INTO carreras (id,nombre,pensum,enlace,escuela_id) VALUES
 
 (961, 'Licenciatura en Gestión y Administración Educativa', 'assets/pensums/gestion-educativa.pdf', 'https://uasd.edu.do/facultad-educacion/escuelas/escuela-de-teoria-educativa/', 96)
 ON DUPLICATE KEY UPDATE nombre=VALUES(nombre), pensum=VALUES(pensum), enlace=VALUES(enlace), escuela_id=VALUES(escuela_id);
+
+
+-- Fix pensum URLs en lugar de archivo local, esto se puede ejecutar luego de lo que esta arriba.
+START TRANSACTION;
+
+-- Facultad de Ingeniería y Arquitectura
+UPDATE `carreras` SET `pensum` = 'https://app.uasd.edu.do/PensumGrado/?periodoV=999999&programa=P-AGRI&plan=70601&tipo=1' WHERE `id` = 111;
+UPDATE `carreras` SET `pensum` = 'https://app.uasd.edu.do/PensumGrado/?periodoV=999999&programa=P-ARQ&plan=70201&tipo=1' WHERE `id` = 121;
+UPDATE `carreras` SET `pensum` = 'https://app.uasd.edu.do/PensumGrado/?periodoV=999999&programa=P-IEME&plan=70302&tipo=1' WHERE `id` = 131;
+UPDATE `carreras` SET `pensum` = 'https://app.uasd.edu.do/PensumGrado/?periodoV=999999&programa=P-IEMM&plan=70303&tipo=1' WHERE `id` = 132;
+UPDATE `carreras` SET `pensum` = 'https://app.uasd.edu.do/PensumGrado/?periodoV=999999&programa=P-ICIV&plan=70401&tipo=1' WHERE `id` = 141;
+UPDATE `carreras` SET `pensum` = 'https://app.uasd.edu.do/PensumGrado/?periodoV=999999&programa=P-IIND&plan=70701&tipo=1' WHERE `id` = 151;
+UPDATE `carreras` SET `pensum` = 'https://app.uasd.edu.do/PensumGrado/?periodoV=999999&programa=P-IQUI&plan=70501&tipo=1' WHERE `id` = 161;
+
+-- Facultad de Ciencias Económicas y Sociales
+UPDATE `carreras` SET `pensum` = 'https://app.uasd.edu.do/PensumGrado/?periodoV=999999&programa=P-ADME&plan=50201&tipo=1' WHERE `id` = 211;
+UPDATE `carreras` SET `pensum` = 'https://app.uasd.edu.do/PensumGrado/?periodoV=999999&programa=P-CONT&plan=50301&tipo=1' WHERE `id` = 221;
+UPDATE `carreras` SET `pensum` = 'https://app.uasd.edu.do/PensumGrado/?periodoV=999999&programa=P-ECON&plan=50401&tipo=1' WHERE `id` = 231;
+UPDATE `carreras` SET `pensum` = 'https://app.uasd.edu.do/PensumGrado/?periodoV=999999&programa=P-ESTS&plan=50503&tipo=1' WHERE `id` = 241;
+UPDATE `carreras` SET `pensum` = 'https://app.uasd.edu.do/PensumGrado/?periodoV=999999&programa=P-MERC&plan=50203&tipo=1' WHERE `id` = 251;
+UPDATE `carreras` SET `pensum` = 'https://app.uasd.edu.do/PensumGrado/?periodoV=999999&programa=P-SOCI&plan=50601&tipo=1' WHERE `id` = 261;
+UPDATE `carreras` SET `pensum` = 'https://app.uasd.edu.do/PensumGrado/?periodoV=999999&programa=P-TURH&plan=50801&tipo=1' WHERE `id` = 271;
+
+-- Facultad de Ciencias
+UPDATE `carreras` SET `pensum` = 'https://app.uasd.edu.do/PensumGrado/?periodoV=999999&programa=P-EMBQ&plan=24404&tipo=1' WHERE `id` = 311;
+UPDATE `carreras` SET `pensum` = 'https://app.uasd.edu.do/PensumGrado/?periodoV=999999&programa=P-BIOL&plan=40201&tipo=1' WHERE `id` = 312;
+UPDATE `carreras` SET `pensum` = 'https://app.uasd.edu.do/PensumGrado/?periodoV=999999&programa=P-GEOG&plan=40302&tipo=1' WHERE `id` = 321;
+UPDATE `carreras` SET `pensum` = 'https://app.uasd.edu.do/PensumGrado/?periodoV=999999&programa=P-EMFM&plan=24402&tipo=1' WHERE `id` = 331;
+UPDATE `carreras` SET `pensum` = 'https://app.uasd.edu.do/PensumGrado/?periodoV=999999&programa=P-FISI&plan=40401&tipo=1' WHERE `id` = 332;
+UPDATE `carreras` SET `pensum` = 'https://app.uasd.edu.do/PensumGrado/?periodoV=999999&programa=P-INFO&plan=40601&tipo=1' WHERE `id` = 341;
+UPDATE `carreras` SET `pensum` = 'https://app.uasd.edu.do/PensumGrado/?periodoV=999999&programa=P-EMFM&plan=24402&tipo=1' WHERE `id` = 351;
+UPDATE `carreras` SET `pensum` = 'https://app.uasd.edu.do/PensumGrado/?periodoV=999999&programa=P-MATE&plan=40603&tipo=1' WHERE `id` = 352;
+UPDATE `carreras` SET `pensum` = 'https://app.uasd.edu.do/PensumGrado/?periodoV=999999&programa=P-MICR&plan=40701&tipo=1' WHERE `id` = 361;
+UPDATE `carreras` SET `pensum` = 'https://app.uasd.edu.do/PensumGrado/?periodoV=999999&programa=P-EMBQ&plan=24404&tipo=1' WHERE `id` = 371;
+UPDATE `carreras` SET `pensum` = 'https://app.uasd.edu.do/PensumGrado/?periodoV=999999&programa=P-QUIM&plan=40801&tipo=1' WHERE `id` = 372;
+
+-- Facultad de Humanidades
+UPDATE `carreras` SET `pensum` = 'https://app.uasd.edu.do/PensumGrado/?periodoV=999999&programa=P-CSPE&plan=30403&tipo=1' WHERE `id` = 411;
+UPDATE `carreras` SET `pensum` = 'https://app.uasd.edu.do/PensumGrado/?periodoV=999999&programa=P-CSRP&plan=30404&tipo=1' WHERE `id` = 412;
+UPDATE `carreras` SET `pensum` = 'https://app.uasd.edu.do/PensumGrado/?periodoV=999999&programa=P-CSCG&plan=30405&tipo=1' WHERE `id` = 413;
+UPDATE `carreras` SET `pensum` = 'https://app.uasd.edu.do/PensumGrado/?periodoV=999999&programa=P-FILO&plan=30501&tipo=1' WHERE `id` = 421;
+UPDATE `carreras` SET `pensum` = 'https://app.uasd.edu.do/PensumGrado/?periodoV=999999&programa=P-HIST&plan=30601&tipo=1' WHERE `id` = 431;
+UPDATE `carreras` SET `pensum` = 'https://app.uasd.edu.do/PensumGrado/?periodoV=999999&programa=P-LEMI&plan=30701&tipo=1' WHERE `id` = 441;
+UPDATE `carreras` SET `pensum` = 'https://app.uasd.edu.do/PensumGrado/?periodoV=999999&programa=P-LEMF&plan=30703&tipo=1' WHERE `id` = 442;
+UPDATE `carreras` SET `pensum` = 'https://app.uasd.edu.do/PensumGrado/?periodoV=999999&programa=P-EMML&plan=24401&tipo=1' WHERE `id` = 451;
+UPDATE `carreras` SET `pensum` = 'https://app.uasd.edu.do/PensumGrado/?periodoV=999999&programa=P-LET&plan=30801&tipo=1' WHERE `id` = 452;
+UPDATE `carreras` SET `pensum` = 'https://app.uasd.edu.do/PensumGrado/?periodoV=999999&programa=P-PSII&plan=31005&tipo=1' WHERE `id` = 461;
+UPDATE `carreras` SET `pensum` = 'https://app.uasd.edu.do/PensumGrado/?periodoV=999999&programa=P-PSIC&plan=31002&tipo=1' WHERE `id` = 462;
+UPDATE `carreras` SET `pensum` = 'https://app.uasd.edu.do/PensumGrado/?periodoV=999999&programa=P-PSIE&plan=31004&tipo=1' WHERE `id` = 463;
+
+-- Facultad de Ciencias Jurídicas y Políticas
+UPDATE `carreras` SET `pensum` = 'https://app.uasd.edu.do/PensumGrado/?periodoV=999999&programa=P-CSPO&plan=60301&tipo=1' WHERE `id` = 511;
+UPDATE `carreras` SET `pensum` = 'https://app.uasd.edu.do/PensumGrado/?periodoV=999999&programa=P-DERE&plan=60202&tipo=1' WHERE `id` = 521;
+
+-- Facultad de Ciencias de la Salud
+UPDATE `carreras` SET `pensum` = 'https://app.uasd.edu.do/PensumGrado/?periodoV=999999&programa=P-BIOA&plan=80902&tipo=1' WHERE `id` = 611;
+UPDATE `carreras` SET `pensum` = 'https://app.uasd.edu.do/PensumGrado/?periodoV=999999&programa=P-ENFE&plan=80603&tipo=1' WHERE `id` = 621;
+UPDATE `carreras` SET `pensum` = 'https://app.uasd.edu.do/PensumGrado/?periodoV=999999&programa=P-FARM&plan=80501&tipo=1' WHERE `id` = 631;
+UPDATE `carreras` SET `pensum` = 'https://app.uasd.edu.do/PensumGrado/?periodoV=999999&programa=P-DMED&plan=81001&tipo=1' WHERE `id` = 641;
+UPDATE `carreras` SET `pensum` = 'https://app.uasd.edu.do/PensumGrado/?periodoV=999999&programa=P-IMAG&plan=80907&tipo=1' WHERE `id` = 642;
+UPDATE `carreras` SET `pensum` = 'https://app.uasd.edu.do/PensumGrado/?periodoV=999999&programa=P-CODO&plan=80801&tipo=1' WHERE `id` = 651;
+
+-- Facultad de Ciencias Agronómicas y Veterinarias
+UPDATE `carreras` SET `pensum` = 'https://app.uasd.edu.do/PensumGrado/?periodoV=999999&programa=P-IAPC&plan=90209&tipo=1' WHERE `id` = 711;
+UPDATE `carreras` SET `pensum` = 'https://app.uasd.edu.do/PensumGrado/?periodoV=999999&programa=P-IASR&plan=90208&tipo=1' WHERE `id` = 712;
+UPDATE `carreras` SET `pensum` = 'https://app.uasd.edu.do/PensumGrado/?periodoV=999999&programa=P-MEDV&plan=90402&tipo=1' WHERE `id` = 721;
+UPDATE `carreras` SET `pensum` = 'https://app.uasd.edu.do/PensumGrado/?periodoV=999999&programa=P-IZOO&plan=90306&tipo=1' WHERE `id` = 731;
+
+-- Facultad de Artes
+UPDATE `carreras` SET `pensum` = 'https://app.uasd.edu.do/PensumGrado/?periodoV=999999&programa=P-ARPP&plan=30322&tipo=1' WHERE `id` = 811;
+UPDATE `carreras` SET `pensum` = 'https://app.uasd.edu.do/PensumGrado/?periodoV=999999&programa=P-ARPE&plan=30323&tipo=1' WHERE `id` = 812;
+UPDATE `carreras` SET `pensum` = 'https://app.uasd.edu.do/PensumGrado/?periodoV=999999&programa=P-CINC&plan=30361&tipo=1' WHERE `id` = 821;
+UPDATE `carreras` SET `pensum` = 'https://app.uasd.edu.do/PensumGrado/?periodoV=999999&programa=P-HISA&plan=30311&tipo=1' WHERE `id` = 831;
+UPDATE `carreras` SET `pensum` = 'https://app.uasd.edu.do/PensumGrado/?periodoV=999999&programa=P-AIDI&plan=30373&tipo=1' WHERE `id` = 841;
+UPDATE `carreras` SET `pensum` = 'https://app.uasd.edu.do/PensumGrado/?periodoV=999999&programa=P-AIDM&plan=30371&tipo=1' WHERE `id` = 842;
+UPDATE `carreras` SET `pensum` = 'https://app.uasd.edu.do/PensumGrado/?periodoV=999999&programa=P-MUS&plan=30350&tipo=1' WHERE `id` = 851;
+UPDATE `carreras` SET `pensum` = 'https://app.uasd.edu.do/PensumGrado/?periodoV=999999&programa=P-MUST&plan=30355&tipo=1' WHERE `id` = 852;
+UPDATE `carreras` SET `pensum` = 'https://app.uasd.edu.do/PensumGrado/?periodoV=999999&programa=P-ARPD&plan=30332&tipo=1' WHERE `id` = 861;
+UPDATE `carreras` SET `pensum` = 'https://app.uasd.edu.do/PensumGrado/?periodoV=999999&programa=P-PUBC&plan=30333&tipo=1' WHERE `id` = 862;
+UPDATE `carreras` SET `pensum` = 'https://app.uasd.edu.do/PensumGrado/?periodoV=999999&programa=P-TEA&plan=30340&tipo=1' WHERE `id` = 871;
+
+-- Facultad de Ciencias de la Educación
+UPDATE `carreras` SET `pensum` = 'https://app.uasd.edu.do/PensumGrado/?periodoV=999999&programa=P-BCIN&plan=24701&tipo=1' WHERE `id` = 911;
+UPDATE `carreras` SET `pensum` = 'https://app.uasd.edu.do/PensumGrado/?periodoV=999999&programa=P-EDFD&plan=24601&tipo=1' WHERE `id` = 921;
+UPDATE `carreras` SET `pensum` = 'https://app.uasd.edu.do/PensumGrado/?periodoV=999999&programa=P-EDUI&plan=30954&tipo=1' WHERE `id` = 931;
+UPDATE `carreras` SET `pensum` = 'https://app.uasd.edu.do/PensumGrado/?periodoV=999999&programa=P-EDBA&plan=24355&tipo=1' WHERE `id` = 932;
+UPDATE `carreras` SET `pensum` = 'https://app.uasd.edu.do/PensumGrado/?periodoV=999999&programa=P-EDFF&plan=30903&tipo=1' WHERE `id` = 941;
+UPDATE `carreras` SET `pensum` = 'https://app.uasd.edu.do/PensumGrado/?periodoV=999999&programa=P-EMCS&plan=24405&tipo=1' WHERE `id` = 942;
+UPDATE `carreras` SET `pensum` = 'https://app.uasd.edu.do/PensumGrado/?periodoV=999999&programa=P-EMFM&plan=24402&tipo=1' WHERE `id` = 943;
+UPDATE `carreras` SET `pensum` = 'https://app.uasd.edu.do/PensumGrado/?periodoV=999999&programa=P-EDOA&plan=30951&tipo=1' WHERE `id` = 951;
+UPDATE `carreras` SET `pensum` = 'https://app.uasd.edu.do/PensumGrado/?periodoV=999999&programa=P-EMGE&plan=24202&tipo=1' WHERE `id` = 961;
+
+COMMIT;
