@@ -1,36 +1,171 @@
-#COMO CORRER EL BACKEND:
+# UASD — Catálogo de facultades, escuelas y carreras
 
-1.	Instalar xampp, e iniciar MySQL (al lado de esta hay un boton que dice estar):
-   <img width="940" height="599" alt="image" src="https://github.com/user-attachments/assets/8a199105-b67f-4c2e-8bda-cf0a5b6c82f9" />
-   
-3.	Importa la base de datos a MySQL (en la parte superior derecha hay un boton que dice importar).
- <img width="940" height="329" alt="image" src="https://github.com/user-attachments/assets/590bafe4-8437-4ea9-ac96-63cf70874c3d" />
- 
-4.	Se agrega el archivo ubicado en backed/database/catalogo_carreras.sql y se le da a importa.
- <img width="681" height="364" alt="image" src="https://github.com/user-attachments/assets/d4e795cc-09e6-4346-b895-502d276d8731" />
+Proyecto con:
 
-5.	Si no da error ya la base de datos está montada, ahora hay que conectarla con la API.
-6.	Vamos a al archivo ubicado en backend/src/main/resources/application.properties
-7.	En ese archivo cambiamos las propiedades por las que por defecto que pone mysql por defecto que sería (Aunque estas ay deberían estar bien): 
+- **backend/**: API REST con Java + Spring Boot (Maven), conectada a MySQL.
+- **frontend/**: página estática (HTML, CSS y JavaScript) que consume la API.
+- **backend/database/catalogo_carreras.sql**: script con la base de datos y los datos del catálogo.
+
+## Requisitos
+
+- **JDK 17 o superior** (probado con JDK 21). Verifica con `java -version`.
+- No hace falta instalar Maven: el proyecto incluye **Maven Wrapper** (`mvnw.cmd` / `mvnw`).
+- Para usar MySQL: XAMPP, WAMP o MySQL Server.
+
+---
+
+## Opción 1: correr el backend sin MySQL (modo demo)
+
+Sirve para probar rápido que todo funciona. Usa una base H2 en memoria con los mismos datos del catálogo.
+
+```bat
+cd backend
+mvnw.cmd spring-boot:run -Dspring-boot.run.profiles=demo
+```
+
+En Linux / macOS:
+
+```bash
+cd backend
+./mvnw spring-boot:run -Dspring-boot.run.profiles=demo
+```
+
+Luego abre en el navegador:
+
+- http://localhost:8080/api/facultades
+- http://localhost:8080/api/facultades/1
+
+> Cada vez que reinicies en modo demo, la base se vuelve a crear con los datos del script.
+
+---
+
+## Opción 2: correr el backend con MySQL (XAMPP)
+
+### 1. Iniciar MySQL
+
+Abre XAMPP y pulsa **Start** en el módulo **MySQL** (no hace falta Apache).
+
+### 2. Importar la base de datos
+
+1. Entra a http://localhost/phpmyadmin
+2. Pestaña **Importar** (arriba a la derecha).
+3. Selecciona el archivo `backend/database/catalogo_carreras.sql`.
+4. Pulsa **Importar** / **Continuar**. Debe crearse la base `catalogo_carreras`.
+
+> También puedes importarlo desde la consola:
+> `mysql -u root -p < backend/database/catalogo_carreras.sql`
+
+### 3. Revisar la conexión
+
+El archivo `backend/src/main/resources/application.properties` ya trae los valores por defecto de XAMPP:
+
+```properties
 spring.datasource.url=jdbc:mysql://localhost:3306/catalogo_carreras
 spring.datasource.username=root
 spring.datasource.password=
-8.	Seguimos con la instalación del server para ver la página, en este caso uso la extensión live server para Visual Studio code.
-9.	Una ves instalada la extensión solo hay que abrir en vs code el archivo index.html y dale click a "Go live" en la parte inferior derecha e iniciar el servidor.
-    <img width="872" height="578" alt="image" src="https://github.com/user-attachments/assets/f8ffaeac-b623-413b-ad86-10071478a35a" />
- 
-11.	Automáticamente nos abrirá la página en nuestro navegador.
-12.	Ahora hay que instalar la Api en java, para esto primero hay que instalar estas extensiones para VS code: 
-•	Extension Pack for Java (Microsoft).
-•	Maven for Java (Microsoft).
-13.	Seguido debemos instalar apache Maven, pueden guiarse de este video para la instalación: https://www.youtube.com/watch?v=rl5-yyrmp-0
-14.	Una ves instalado debemos abrir la terminar en VS code con Control + ñ, en la consola debemos abrir la carpeta del backend, podemos usar, por ejemplo 
-cd backend.
-<img width="783" height="158" alt="image" src="https://github.com/user-attachments/assets/9aa65482-0a4c-4c6e-b843-cd465364ee76" />
- 
-16.	Usamos el comando mvn spring-boot:run. Y si todo sale la API debería estar activa y enviando los datos a nuestra página.
-    <img width="940" height="395" alt="image" src="https://github.com/user-attachments/assets/405166e3-ad5a-4cd2-803f-cd83bec41cbc" />
-    
-17. Ya con todo esto nuestra pagina deberia estar recibiendo los datos de la API.
+```
 
- 
+Si tu MySQL tiene contraseña, escríbela en `spring.datasource.password`.
+
+También puedes usar variables de entorno sin tocar el archivo:
+
+```bat
+set DB_USERNAME=root
+set DB_PASSWORD=tu_clave
+```
+
+### 4. Arrancar la API
+
+```bat
+cd backend
+mvnw.cmd spring-boot:run
+```
+
+Debe aparecer en consola algo como `Started CatalogoApplication` y `Tomcat started on port 8080`.
+
+Comprueba en el navegador: http://localhost:8080/api/facultades
+
+---
+
+## Frontend
+
+1. Instala la extensión **Live Server** en VS Code.
+2. Abre `frontend/index.html` y pulsa **Go Live** (abajo a la derecha).
+3. El catálogo se carga desde la API; si el backend no está corriendo verás el mensaje de error en pantalla.
+
+La API permite peticiones desde cualquier puerto local (`localhost` / `127.0.0.1`), así que Live Server puede usar 5500, 5501, etc.
+
+---
+
+## Endpoints
+
+| Método | Ruta                  | Descripción                                        |
+| ------ | --------------------- | -------------------------------------------------- |
+| GET    | `/api/facultades`     | Lista de facultades con sus escuelas y carreras.   |
+| GET    | `/api/facultades/{id}`| Una facultad por ID (404 si no existe).            |
+
+Ejemplo de respuesta (`/api/facultades/1`):
+
+```json
+{
+  "id": 1,
+  "nombre": "Facultad de Ingeniería y Arquitectura",
+  "descripcion": "Forma profesionales capaces de diseñar...",
+  "color": "#17349d",
+  "logo": "assets/facultades/ingenieria.png",
+  "decano": { "nombre": "Ing. Mayra Sanchez", "foto": "assets/decanos/ingenieria.jpg" },
+  "escuelas": [
+    {
+      "id": 11,
+      "nombre": "Escuela de Agrimensura",
+      "descripcion": "Forma en la medición...",
+      "carreras": [
+        {
+          "id": 111,
+          "nombre": "Agrimensura",
+          "pensum": "https://app.uasd.edu.do/PensumGrado/?periodoV=999999&programa=P-AGRI&plan=000012&nivel=GR",
+          "enlace": "https://uasd.edu.do/facultad-ingenieria/escuelas/escuela-de-agrimensura/"
+        }
+      ]
+    }
+  ]
+}
+```
+
+---
+
+## Estructura del backend
+
+```
+backend/
+├── database/catalogo_carreras.sql          Script de MySQL
+├── pom.xml                                 Dependencias Maven
+├── mvnw / mvnw.cmd                         Maven Wrapper
+└── src/main/
+    ├── java/com/universidad/catalogo/
+    │   ├── CatalogoApplication.java         Clase principal
+    │   ├── config/CorsConfig.java           Configuración CORS
+    │   ├── controller/FacultadController.java
+    │   ├── dto/                             DTOs de respuesta
+    │   ├── model/                           Entidades JPA
+    │   ├── repository/FacultadRepository.java
+    │   └── service/FacultadService.java
+    └── resources/
+        ├── application.properties           Configuración MySQL
+        ├── application-demo.properties      Configuración del modo demo (H2)
+        └── data.sql                         Datos para el modo demo
+```
+
+---
+
+## Problemas comunes
+
+| Problema | Solución |
+| -------- | -------- |
+| `Communications link failure` | MySQL no está iniciado. Enciéndelo desde XAMPP. |
+| `Access denied for user 'root'@'localhost'` | La contraseña de MySQL no coincide con `application.properties`. |
+| `Unknown database 'catalogo_carreras'` | No has importado `backend/database/catalogo_carreras.sql`. |
+| `Port 8080 was already in use` | Cierra el otro proceso o arranca con `set SERVER_PORT=8081` (y ajusta `API_BASE_URL` en `frontend/js/api.js`). |
+| `mvn` no se reconoce | Usa el wrapper: `mvnw.cmd` (Windows) o `./mvnw` (Linux/macOS). |
+| La página dice que el backend no responde | Abre http://localhost:8080/api/facultades para confirmar que la API está activa y revisa la consola. |
+| `mvnw.cmd` no descarga Maven | Necesita internet la primera vez (descarga Maven y las dependencias). |
