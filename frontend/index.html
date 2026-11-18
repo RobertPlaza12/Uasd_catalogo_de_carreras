@@ -49,7 +49,22 @@
         </div>
         <span id="faculty-count" class="result-count"></span>
       </div>
+      <form id="search-form" class="search-form">
+  <input
+    type="search"
+    id="search-input"
+    placeholder="Buscar facultad, escuela o carrera..."
+    aria-label="Buscar en el catálogo"
+  >
 
+  <button type="submit" class="btn btn-primary">
+    🔍 Buscar
+  </button>
+
+  <button type="button" id="clear-search" class="btn btn-outline">
+    Limpiar
+  </button>
+</form>
       <div id="status-message" class="status-message" role="status" aria-live="polite">
         Cargando facultades...
       </div>

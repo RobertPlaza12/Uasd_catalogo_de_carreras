@@ -1,3 +1,4 @@
+let facultadesOriginales = [];
 document.addEventListener("DOMContentLoaded", iniciarCatalogo);
 
 async function iniciarCatalogo() {
@@ -7,6 +8,7 @@ async function iniciarCatalogo() {
 
   try {
     const facultades = await obtenerFacultades();
+    facultadesOriginales = facultades;
     estado.textContent = "";
 
     if (!Array.isArray(facultades) || facultades.length === 0) {
@@ -184,3 +186,97 @@ function validarEnlace(enlace) {
   }
 }
 
+// Normaliza el texto para buscar sin importar mayúsculas ni acentos.
+function normalizarTexto(texto) {
+  return String(texto || "")
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
+}
+
+// Busca facultades, escuelas y carreras.
+function buscarCatalogo(termino) {
+  const busqueda = normalizarTexto(termino);
+
+  const resultados = facultadesOriginales.filter(facultad => {
+    const nombreFacultad = normalizarTexto(facultad.nombre);
+    const descripcion = normalizarTexto(facultad.descripcion);
+
+    const coincideFacultad =
+      nombreFacultad.includes(busqueda) ||
+      descripcion.includes(busqueda);
+
+    const escuelas = Array.isArray(facultad.escuelas)
+      ? facultad.escuelas
+      : [];
+
+    const coincideEscuela = escuelas.some(escuela => {
+      const nombreEscuela = normalizarTexto(escuela.nombre);
+
+      const carreras = Array.isArray(escuela.carreras)
+        ? escuela.carreras
+        : [];
+
+      const coincideCarrera = carreras.some(carrera =>
+        normalizarTexto(carrera.nombre).includes(busqueda)
+      );
+
+      return nombreEscuela.includes(busqueda) || coincideCarrera;
+    });
+
+    return coincideFacultad || coincideEscuela;
+  });
+
+  mostrarResultados(resultados);
+}
+
+// Muestra las facultades encontradas.
+function mostrarResultados(resultados) {
+  const contenedor = document.getElementById("faculties-container");
+  const estado = document.getElementById("status-message");
+  const contador = document.getElementById("faculty-count");
+
+  contenedor.innerHTML = "";
+
+  contador.textContent =
+    `${resultados.length} resultado${resultados.length === 1 ? "" : "s"}`;
+
+  if (resultados.length === 0) {
+    estado.textContent = "No se encontraron resultados.";
+    return;
+  }
+
+  estado.textContent = "";
+
+  contenedor.innerHTML = resultados
+    .map(crearTarjetaFacultad)
+    .join("");
+
+  configurarBotones();
+}
+
+// Configura el botón Buscar y el botón Limpiar.
+document.addEventListener("DOMContentLoaded", () => {
+  const formulario = document.getElementById("search-form");
+  const campoBusqueda = document.getElementById("search-input");
+  const botonLimpiar = document.getElementById("clear-search");
+
+  formulario.addEventListener("submit", evento => {
+    evento.preventDefault();
+
+    const termino = campoBusqueda.value.trim();
+
+    if (termino === "") {
+      mostrarResultados(facultadesOriginales);
+      return;
+    }
+
+    buscarCatalogo(termino);
+  });
+
+  botonLimpiar.addEventListener("click", () => {
+    campoBusqueda.value = "";
+    mostrarResultados(facultadesOriginales);
+    campoBusqueda.focus();
+  });
+});
