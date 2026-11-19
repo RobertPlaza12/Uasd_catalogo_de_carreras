@@ -28,7 +28,7 @@ spring.datasource.password=
 cd backend.
 <img width="783" height="158" alt="image" src="https://github.com/user-attachments/assets/9aa65482-0a4c-4c6e-b843-cd465364ee76" />
  
-16.	Usamos el comando mvn spring-boot:run. Y si todo sale la API debería estar activa y enviando los datos a nuestra página.
+16.	Usamos el comando mvn spring-boot:run. a veces la primera ves fallara porque tendra que intalar todas las dependencias, si es el caso se coloca nuevamente y si todo sale la API debería estar activa y enviando los datos a nuestra página.
     <img width="940" height="395" alt="image" src="https://github.com/user-attachments/assets/405166e3-ad5a-4cd2-803f-cd83bec41cbc" />
     
 17. Ya con todo esto nuestra pagina deberia estar recibiendo los datos de la API.
